@@ -1,9 +1,6 @@
 from django.shortcuts import render
 import requests
-import logging
 import os
-
-logger = logging.getLogger(__name__)
 
 # Create your views here.
 def hello_django(request):
@@ -18,7 +15,6 @@ def todolist_view(request):
     
     url = 'http://127.0.0.1:' + port + '/api/Todo/'
     todolist_data = requests.get(url)
-    logger.error(todolist_data.json())
     return render(request, 'todolist.html', {
         'data' : todolist_data.json()
     })
