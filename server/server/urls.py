@@ -16,7 +16,7 @@ Including another URLconf
 from django.conf.urls import url, include
 from django.contrib import admin
 from rest_framework.routers import DefaultRouter
-from rest_api.views import hello_django
+from todolist.views import hello_django, todolist_view
 from rest_api import views
 
 router = DefaultRouter()
@@ -25,5 +25,6 @@ router.register(r'Todo', views.TodoViewSet)
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^hello/', hello_django),
-    url(r'^api/', include(router.urls))
+    url(r'^api/', include(router.urls)),
+    url(r'^todolist/', todolist_view)
 ]

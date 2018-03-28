@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <style>
+        table, th, td {
+            border: 1px solid black;
+            padding: 5px;
+        }
+        table {
+            border-spacing: 15px;
+        }
+    </style>
+    <meta charset="UTF-8">
+    <title>Django To Do List</title>
+</head>
+<body>
+    <h2>Django To Do List</h2>
+    <p>Todo List</p>
+    <table style="width:100%">
+        <tr>
+            <th>ID</th>
+            <th>Task</th>
+            <th>Status</th>
+            <th>Priority</th>
+            <th>Due Date</th>
+            <th>Note</th>
+            <th>Last Modify Time</th>
+            <th>Create Time</th>
+        </tr>
+        {% for todo in data %}
+            <tr>
+                <td>{{todo.id}}</td>
+                <td>{{todo.task}}</td>
+                <td>{{todo.status}}</td>
+                <td>{{todo.priority}}</td>
+                <td>{{todo.due_date}}</td>
+                <td>{{todo.note}}</td>
+                <td>{{todo.last_modify}}</td>
+                <td>{{todo.create_time}}</td>
+            </tr>
+        {% endfor %}
+    </table>
+</body>
+</html>
