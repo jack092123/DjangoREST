@@ -15,9 +15,10 @@
     <script type="text/javascript">
         $(document).ready(function() {
             $("#btn_add").click(function(){
+                var api_url = "http://" + window.location.host + "/api/Todo/";
                 $.ajax({
                     type: 'POST',
-                    url: "http://127.0.0.1:8000/api/Todo/",
+                    url: api_url,
                     data: $("#form_add").serialize(),
                     success: function(result){
                         alert("Add success");
@@ -26,9 +27,10 @@
                 });
             });
             $("button.del").click(function(){
+                var api_url = "http://" + window.location.host + "/api/Todo/" + $(this).attr("name") + "/";
                 $.ajax({
                     type: 'DELETE',
-                    url: "http://127.0.0.1:8000/api/Todo/" + $(this).attr("name") + "/",
+                    url: api_url,
                     success: function(result){
                         location.reload();
                     }
