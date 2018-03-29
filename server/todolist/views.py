@@ -1,10 +1,5 @@
 from django.shortcuts import render
-from . import services
 import os
-
-port = os.environ.get('DJANGO_PORT')
-if port == None:
-    port = r'8000'
 
 # Create your views here.
 def hello_django(request):
@@ -13,11 +8,7 @@ def hello_django(request):
     })
 
 def todolist_view(request):
-    return render(request, 'todolist.html', {
-        'data' : services.get_todolist(port).json()
-    })
+    return render(request, 'todolist.html', {})
 
 def edit_view(request, todo_id):
-    return render(request, 'edit.html', {
-        'data' : services.get_todo(port, todo_id).json()
-    })
+    return render(request, 'edit.html', {})

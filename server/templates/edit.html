@@ -4,10 +4,22 @@
     <script type"text/javascript", src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
     <script type="text/javascript">
         $(document).ready(function() {
+            var url = window.location.href.split("/");
+            var id = url[url.length - 2];
+            var api_url = "http://" + window.location.host + "/api/Todo/" + id + "/";
+            $.ajax({
+                type: 'GET',
+                url: api_url,
+                success: function(result){
+                    console.log(result);
+                    $("#task").val(result.task);
+                    $("#status").val(result.status);
+                    $("#priority").val(result.priority);
+                    $("#due_date").val(result.due_date);
+                    $("#note").val(result.note);
+                }
+            });
             $("#btn_edit").click(function(){
-                var url = window.location.href.split("/");
-                var id = url[url.length - 2];
-                var api_url = "http://" + window.location.host + "/api/Todo/" + id + "/";
                 $.ajax({
                     type: 'PUT',
                     url: api_url,
@@ -28,11 +40,11 @@
     <h2>Edit To Do List</h2>
     <p>Editing Todo by api server</p>
     <form id="form_edit">
-    Task: <input type="text" name="task" value={{data.task}}><br>
-    Status: <input type="text" name="status" value={{data.status}}><br>
-    Priority: <input type="text" name="priority" value={{data.priority}}><br>
-    Due Date: <input type="text" name="due_date", placeholder="yyyy-mm-dd" value={{data.due_date}}><br>
-    Note: <input type="text" name="note" value={{data.note}}><br>
+    Task: <input type="text" name="task" id="task"><br>
+    Status: <input type="text" name="status" id="status"><br>
+    Priority: <input type="text" name="priority" id="priority"><br>
+    Due Date: <input type="text" name="due_date", placeholder="yyyy-mm-dd" id="due_date"}><br>
+    Note: <input type="text" name="note" id="note"><br>
     <input type="button" id="btn_edit" value="EDIT">
     </form>
 </body>

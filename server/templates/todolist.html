@@ -14,27 +14,50 @@
     <script type"text/javascript", src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
     <script type="text/javascript">
         $(document).ready(function() {
+            var api_url = "http://" + window.location.host + "/api/Todo/";
+            $.ajax({
+                type: 'GET',
+                url: api_url,
+                success: function(result){
+                    result.forEach(function(element){
+                        $("#table").append(
+                            '<tr><td>'+ element.id + '</td>' +
+                            '<td>' + element.task + '</td>' +
+                            '<td>' + element.status + '</td>' +
+                            '<td>' + element.priority + '</td>' +
+                            '<td>' + element.due_date + '</td>' +
+                            '<td>' + element.note + '</td>' +
+                            '<td>' + element.last_modify + '</td>' +
+                            '<td>' + element.create_time + '</td>' +
+                            '<td><button type="button" class="edt" name="' + element.id + '">Edit</button></td>' +
+                            '<td><button type="button" class="del" name="' + element.id + '">Delete</button></td></tr>'
+                        );
+                    });
+                    $("button.edt").click(function(){
+                        console.log("1");
+                        location.href = "http://" + window.location.host + "/todolist/edit/" + $(this).attr("name") + "/";
+                    });
+
+                    $("button.del").click(function(){
+                        var api_url = "http://" + window.location.host + "/api/Todo/" + $(this).attr("name") + "/";
+                        $.ajax({
+                            type: 'DELETE',
+                            url: api_url,
+                            success: function(result){
+                                location.reload();
+                            }
+                        });
+                    });
+                }
+            });
+
             $("#btn_add").click(function(){
-                var api_url = "http://" + window.location.host + "/api/Todo/";
                 $.ajax({
                     type: 'POST',
                     url: api_url,
                     data: $("#form_add").serialize(),
                     success: function(result){
                         alert("Add success");
-                        location.reload();
-                    }
-                });
-            });
-            $("button.edt").click(function(){
-                location.href = "http://" + window.location.host + "/todolist/edit/" + $(this).attr("name") + "/";
-            });
-            $("button.del").click(function(){
-                var api_url = "http://" + window.location.host + "/api/Todo/" + $(this).attr("name") + "/";
-                $.ajax({
-                    type: 'DELETE',
-                    url: api_url,
-                    success: function(result){
                         location.reload();
                     }
                 });
@@ -48,7 +71,7 @@
 <body>
     <h2>Django To Do List</h2>
     <p>Todo List</p>
-    <table style="width:100%">
+    <table id="table" style="width:100%">
         <tr>
             <th>ID</th>
             <th>Task</th>
@@ -61,20 +84,6 @@
             <th>Edit</th>
             <th>Delete</th>
         </tr>
-        {% for todo in data %}
-            <tr>
-                <td>{{todo.id}}</td>
-                <td>{{todo.task}}</td>
-                <td>{{todo.status}}</td>
-                <td>{{todo.priority}}</td>
-                <td>{{todo.due_date}}</td>
-                <td>{{todo.note}}</td>
-                <td>{{todo.last_modify}}</td>
-                <td>{{todo.create_time}}</td>
-                <td><button type="button" class="edt" name={{todo.id}}>Edit</button></td>
-                <td><button type="button" class="del" name={{todo.id}}>Delete</button></td>
-            </tr>
-        {% endfor %}
     </table>
     <br><br>
 
