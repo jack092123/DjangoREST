@@ -26,6 +26,9 @@
                     }
                 });
             });
+            $("button.edt").click(function(){
+                location.href = "http://" + window.location.host + "/todolist/edit/" + $(this).attr("name") + "/";
+            });
             $("button.del").click(function(){
                 var api_url = "http://" + window.location.host + "/api/Todo/" + $(this).attr("name") + "/";
                 $.ajax({
@@ -68,7 +71,7 @@
                 <td>{{todo.note}}</td>
                 <td>{{todo.last_modify}}</td>
                 <td>{{todo.create_time}}</td>
-                <td></td>
+                <td><button type="button" class="edt" name={{todo.id}}>Edit</button></td>
                 <td><button type="button" class="del" name={{todo.id}}>Delete</button></td>
             </tr>
         {% endfor %}
