@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <style>
+        table, th, td {
+            border: 1px solid black;
+            padding: 5px;
+        }
+        table {
+            border-spacing: 15px;
+        }
+    </style>
+
+    <script type"text/javascript", src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function() {
+            $("#btn_add").click(function(){
+                var api_url = "http://" + window.location.host + "/api/Todo/";
+                $.ajax({
+                    type: 'POST',
+                    url: api_url,
+                    data: $("#form_add").serialize(),
+                    success: function(result){
+                        alert("Add success");
+                        location.reload();
+                    }
+                });
+            });
+            $("button.edt").click(function(){
+                location.href = "http://" + window.location.host + "/todolist/edit/" + $(this).attr("name") + "/";
+            });
+            $("button.del").click(function(){
+                var api_url = "http://" + window.location.host + "/api/Todo/" + $(this).attr("name") + "/";
+                $.ajax({
+                    type: 'DELETE',
+                    url: api_url,
+                    success: function(result){
+                        location.reload();
+                    }
+                });
+            });
+        });
+    </script>
+
+    <meta charset="UTF-8">
+    <title>Django To Do List</title>
+</head>
+<body>
+    <h2>Django To Do List</h2>
+    <p>Todo List</p>
+    <table style="width:100%">
+        <tr>
+            <th>ID</th>
+            <th>Task</th>
+            <th>Status</th>
+            <th>Priority</th>
+            <th>Due Date</th>
+            <th>Note</th>
+            <th>Last Modify Time</th>
+            <th>Create Time</th>
+            <th>Edit</th>
+            <th>Delete</th>
+        </tr>
+        {% for todo in data %}
+            <tr>
+                <td>{{todo.id}}</td>
+                <td>{{todo.task}}</td>
+                <td>{{todo.status}}</td>
+                <td>{{todo.priority}}</td>
+                <td>{{todo.due_date}}</td>
+                <td>{{todo.note}}</td>
+                <td>{{todo.last_modify}}</td>
+                <td>{{todo.create_time}}</td>
+                <td><button type="button" class="edt" name={{todo.id}}>Edit</button></td>
+                <td><button type="button" class="del" name={{todo.id}}>Delete</button></td>
+            </tr>
+        {% endfor %}
+    </table>
+    <br><br>
+
+    <h2>Add ToDo</h2>
+    <p>Adding Todo by api server</p>
+    <form id="form_add">
+    Task: <input type="text" name="task"><br>
+    Status: <input type="text" name="status"><br>
+    Priority: <input type="text" name="priority"><br>
+    Due Date: <input type="text" name="due_date", placeholder="yyyy-mm-dd"><br>
+    Note: <input type="text" name="note"><br>
+    <input type="button" id="btn_add" value="ADD">
+    </form>
+</body>
+</html>
