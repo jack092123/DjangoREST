@@ -16,5 +16,6 @@ RUN git clone https://github.com/jack092123/ToDoList-Django.git
 
 WORKDIR /home/ToDoList-Django
 RUN pip install -r ./requirements.txt
+RUN chmod 755 ./entrypoint.sh
 
-ENTRYPOINT ["python", "./server/manage.py", "runserver", "0.0.0.0:$DJANGO_PORT"]
+ENTRYPOINT ["./entrypoint.sh"]
