@@ -25,7 +25,7 @@ SECRET_KEY = 'ieh34jq2$^k!by$8q!-2i607_o!#a7z&^bdloqsl!n@try_rbj'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
-ALLOWED_HOSTS = ['127.0.0.1', 'localhost', 'roachowo.myddns.com']
+ALLOWED_HOSTS = ['127.0.0.1', 'localhost', 'roachowo.myddns.com', 'roachnas.myqnapcloud.com']
 
 
 # Application definition
